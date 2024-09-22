@@ -4,9 +4,11 @@ import { IoMdHeartEmpty } from "react-icons/io";
 
 export function PostCard(
   props:{
-    id: number;
+    id: string;
     postTitle: string;
-    userName: string;
+    user: {
+      name: string;
+    };
     postDate: string;
     likes: number;
   }
@@ -18,7 +20,7 @@ export function PostCard(
           <p className="">{props.postTitle}</p>
         </CardContent>
         <CardFooter>
-          <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold pr-2">{props.userName}</p>
+          <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold pr-2">{props.user.name}</p>
           <p className="text-slate-500 dark:text-slate-400 text-sm pr-2">{props.postDate}</p>
           <IoMdHeartEmpty className="text-slate-500 dark:text-slate-400"/>
           <p className="text-slate-500 dark:text-slate-400 text-sm pr-2">{props.likes}</p>

@@ -1,7 +1,7 @@
 import { BookInfo } from "@/components/BookInfo";
 export function PostDetail(
   props:{
-    id: number;
+    id: string;
     postTitle: string;
     postContent: string;
     userName: string;

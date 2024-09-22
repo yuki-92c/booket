@@ -1,25 +1,57 @@
 "use client"
 
 import { useParams } from "next/navigation";
-import {PostDetail} from "@/components/PostDetail";
+import { PostDetail } from "@/components/PostDetail";
+import { use, useEffect, useState } from "react";
 
 export default function () {
   const { id } = useParams(); 
+  interface Post {
+    id: string;
+    postTitle: string;
+    postContent: string;
+    bookTitle: string;
+    author: string;
+    publishedYear: number;
+    publisher: string;
+    likes: number;
+    user: {
+      name: string;
+    };
+    createdAt: string;
+  }
+
+  const [post, setPost] = useState<Post | null>(null);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await fetch(`/api/posts/${id}`);
+        const fetchData = await response.json();
+        setPost(fetchData);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    if (id) {
+      fetchPost();
+    }
+  }, [id]);
 
   return (
     <div className="container mx-auto p-4" >
-      <PostDetail 
-        id={Number(id)} 
-        postTitle="Title1"
-        postContent="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore consequuntur dignissimos reiciendis numquam culpa magni illum quibusdam praesentium veniam ipsum? Odio voluptates repudiandae accusantium rerum ut molest"
-        bookTitle="HARAPEKO AOMUSHI"
-        author="Kiyohiko Azuma"
-        publisher="ABC book"
-        publishedYear={2000}
-        likes={12}
-        userName="Mehmet"
-        postDate="2024/12/12"
-      />
+      {post && <PostDetail 
+        id={post.id}
+        postTitle={post.postTitle}
+        postContent={post.postContent}
+        bookTitle={post.bookTitle}
+        author={post.author}
+        publishedYear={post.publishedYear}
+        publisher={post.publisher}
+        likes={post.likes}
+        userName={post.user.name}
+        postDate={post.createdAt}
+      />}
     </div>
     
   );

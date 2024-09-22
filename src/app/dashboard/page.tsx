@@ -1,29 +1,35 @@
+"use client";
 import { PostCard } from "@/components/PostCard";
+import { useEffect, useState } from "react";
+
+interface Post {
+  id: string;
+  postTitle: string;
+  user: {
+    name: string;
+  };
+  postDate: string;
+  likes: number;
+}
+
 export default function Home() {
 
-  const posts = [
-    {
-      id: 1,
-      postTitle: "Title1",
-      userName: "Mehmet",
-      postDate: "2024/12/12",
-      likes: 12
-    },
-    {
-      id: 2,
-      postTitle: "Title2",
-      userName: "Ahmet",
-      postDate: "2024/12/12",
-      likes: 12
-    },
-    {
-      id: 3,
-      postTitle: "Title3",
-      userName: "Ali",
-      postDate: "2024/12/12",
-      likes: 12
-    },
-  ]
+  const [posts, setPosts] = useState<Post[]>([]);
+  useEffect(() => {
+    async function fetchPosts() {
+    try {
+      const response = await fetch("/api/posts");
+      const fetchData = await response.json();
+      const posts = fetchData.data;
+      setPosts(posts);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  fetchPosts();
+  }, []);
+
+
   return (
     <div className="container mx-auto p-4" >
       <div className="flex flex-col gap-4">
@@ -31,8 +37,6 @@ export default function Home() {
           <PostCard key={post.id} {...post} />
         ))}
       </div>
-
-
     </div>
   );
 }
