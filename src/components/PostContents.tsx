@@ -1,128 +1,176 @@
-'use client'
+"use client"
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { z } from "zod"
+import { PostFormProps } from "@/app/types/posts"
 
-const PostFormProps = z.object({
-  bookTitle: z.string(),
-  author: z.string(),
+// Zodスキーマ定義
+const postSchema = z.object({
+  bookTitle: z.string().min(1, "Book Title is required").max(100, "Book Title is too long").default(""),
+  author: z.string().min(1, "Author is required"),
   publisher: z.string(),
-  publishedYear: z.number().default(2021),
+  publishedYear: z.number(),
   postTitle: z.string(),
   postContent: z.string(),
 });
 
-export function PostForm(
-  props: z.infer<typeof PostFormProps>
-) {
-  const [bookTitle, setBookTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [publisher, setPublisher] = useState('')
-  const [publishedYear, setPublishedYear] = useState('')
-  const [postTitle, setPostTitle] = useState('')
-  const [postContent, setPostContent] = useState('')
+export function PostForm({
+  bookTitle,
+  author,
+  publisher,
+  publishedYear,
+  postTitle,
+  postContent,
+} : PostFormProps) {
+  const [formData, setFormData] = useState({
+    bookTitle,
+    author,
+    publisher,
+    publishedYear,
+    postTitle,
+    postContent,
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const data = {
-      bookTitle,
-      author,
-      publisher,
-      publishedYear,
-      postTitle,
-      postContent,
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: name === 'publishedYear' ? Number(value) : value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const result = postSchema.safeParse(formData);
+    if(result.success === false) {
+      console.log(result.error.errors);
+      setErrors(result.error.errors);
+      return;
     }
-    console.log(data)
+    console.log("---")
+    console.log(result)
+    console.log("---")
 
-    // Reset the form
-    setBookTitle('')
-    setAuthor('')
-    setPublisher('')
-    setPublishedYear('')
-    setPostTitle('')
-    setPostContent('')
+    try {
+      console.log('111')
+      const res = await fetch("/api/newPost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-  }
+      if (res.ok) {
+        alert("Post created successfully!");
+      } else {
+        console.log(res);
+        // alert("Failed to create post.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while creating the post.");
+    }
+  };
 
   return (
     <div>
       <form onSubmit={handleSubmit} className="mb-8">
-        <label htmlFor="bookTitle" className="block text-sm font-medium text-gray-700">
-        Book Title
-        </label>
-        <Input
-          type="text"
-          value={bookTitle}
-          onChange={(e) => setBookTitle(e.target.value)}
-          placeholder="Book Title"
-          maxLength={50}
-          className="mb-4"
-        />
-        <label htmlFor="author" className="block text-sm font-medium text-gray-700">
-        Author
-        </label>
-        <Input
-          type="text"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-          placeholder="Author"
-          maxLength={50}
-          className="mb-4"
-        />
-        <label htmlFor="publisher" className="block text-sm font-medium text-gray-700">
-        Publisher
-        </label>
-        <Input
-          type="text"
-          value={publisher}
-          onChange={(e) => setPublisher(e.target.value)}
-          placeholder="Publisher"
-          maxLength={50}
-          className="mb-4"
-        />
-        <label htmlFor="publishedYear" className="block text-sm font-medium text-gray-700">
-        Published Year
-        </label>
-        <Input
-          type="number"
-          value={publishedYear}
-          onChange={(e) => setPublishedYear(e.target.value)}
-          placeholder="Published Year"
-          maxLength={4}
-          className="mb-4"
-        />
-        <label htmlFor="postTitle" className="block text-sm font-medium text-gray-700">
-        Post Title
-        </label>
-        <Textarea
-          value={postTitle}
-          onChange={(e) => setPostTitle(e.target.value)}
-          placeholder="Post title"
-          maxLength={500}
-          className="mb-4"
-        />
-        <label htmlFor="postContent" className="block text-sm font-medium text-gray-700">
-        Post Content
-        </label>
-        <Textarea
-          value={postContent}
-          onChange={(e) => setPostContent(e.target.value)}
-          placeholder="Post content"
-          maxLength={2000}
-          className="mb-4"
-        />
-        <div className='flex'>
+        <div>
+          <label htmlFor="bookTitle" className="block text-sm font-bold text-slate-500 dark:text-slate-400">
+            Book Title
+          </label>
+          <Input
+            name="bookTitle" // `name` 属性を追加
+            type="text"
+            value={formData.bookTitle}
+            onChange={handleChange}
+            placeholder="Book Title"
+            maxLength={50}
+            className="mb-4 border-slate-200 dark:border-slate-700"
+          />
+        </div>
+        <div>
+          <label htmlFor="author" className="block text-sm font-bold text-slate-500 dark:text-slate-400">
+            Author
+          </label>
+          <Input
+            name="author" // `name` 属性を追加
+            type="text"
+            value={formData.author}
+            onChange={handleChange}
+            placeholder="Author"
+            maxLength={50}
+            className="mb-4 border-slate-200 dark:border-slate-700"
+          />
+        </div>
+        <div>
+          <label htmlFor="publisher" className="block text-sm font-bold text-slate-500 dark:text-slate-400">
+            Publisher
+          </label>
+          <Input
+            name="publisher" // `name` 属性を追加
+            type="text"
+            value={formData.publisher}
+            onChange={handleChange}
+            placeholder="Publisher"
+            maxLength={50}
+            className="mb-4 border-slate-200 dark:border-slate-700"
+          />
+        </div>
+        <div>
+          <label htmlFor="publishedYear" className="block text-sm font-bold text-slate-500 dark:text-slate-400">
+            Published Year
+          </label>
+          <Input
+            name="publishedYear" // `name` 属性を追加
+            type="number"
+            value={formData.publishedYear}
+            onChange={handleChange}
+            placeholder="Published Year"
+            className="mb-4 border-slate-200 dark:border-slate-700"
+          />
+        </div>
+        <div>
+          <label htmlFor="postTitle" className="block text-sm font-bold text-slate-500 dark:text-slate-400">
+            Post Title
+          </label>
+          <Textarea
+            name="postTitle" // `name` 属性を追加
+            value={formData.postTitle}
+            onChange={handleChange}
+            placeholder="Post Title"
+            maxLength={500}
+            className="mb-4 border-slate-200 dark:border-slate-700"
+          />
+        </div>
+        <div>
+          <label htmlFor="postContent" className="block text-sm font-bold text-slate-500 dark:text-slate-400">
+            Post Content
+          </label>
+          <Textarea
+            name="postContent" // `name` 属性を追加
+            value={formData.postContent}
+            onChange={handleChange}
+            placeholder="Post Content"
+            maxLength={2000}
+            className="mb-4 border-slate-200 dark:border-slate-700"
+          />
+        </div>
+        <div className="flex">
           <Button 
             type="submit"
             className="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded flex-auto"
           >
-              Create Post
+            Create Post
           </Button>
         </div>
-
       </form>
     </div>
-  )
+  );
 }

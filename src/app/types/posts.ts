@@ -6,6 +6,14 @@ export interface IBookInfo {
 }
 
 
+export interface PostFormProps {
+  bookTitle: string;
+  author: string;
+  publisher: string;
+  publishedYear: number;
+  postTitle: string;
+  postContent: string;
+}
 
 export interface IPost {
   id: string;
