@@ -2,26 +2,13 @@
 
 import { useParams } from "next/navigation";
 import { PostDetail } from "@/components/PostDetail";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { IPostDetail } from "@/app/types/posts";
 
 export default function () {
   const { id } = useParams(); 
-  interface Post {
-    id: string;
-    postTitle: string;
-    postContent: string;
-    bookTitle: string;
-    author: string;
-    publishedYear: number;
-    publisher: string;
-    likes: number;
-    user: {
-      name: string;
-    };
-    createdAt: string;
-  }
 
-  const [post, setPost] = useState<Post | null>(null);
+  const [post, setPost] = useState<IPostDetail | null>(null);
 
   useEffect(() => {
     const fetchPost = async () => {

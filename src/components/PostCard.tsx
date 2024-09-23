@@ -1,17 +1,11 @@
 import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { IPost } from "@/app/types/posts";
+
 
 export function PostCard(
-  props:{
-    id: string;
-    postTitle: string;
-    user: {
-      name: string;
-    };
-    postDate: string;
-    likes: number;
-  }
+  props: IPost
 ) {
   return (
     <Link href={`/posts/${props.id}`}>

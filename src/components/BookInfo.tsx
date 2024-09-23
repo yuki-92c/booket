@@ -9,14 +9,10 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import Image from 'next/image'
+import { IBookInfo }  from "@/app/types/posts";
 
 export function BookInfo(
-  props:{
-    bookTitle: string;
-    author: string;
-    publisher: string;
-    publishedYear: number;
-  }
+  props: IBookInfo
 ) {
   return (
     <div>
@@ -30,7 +26,7 @@ export function BookInfo(
           <DrawerHeader>
           <DrawerTitle className="flex justify-center">{props.bookTitle}</DrawerTitle>
             <DrawerDescription className="flex justify-center">
-              <Image src={`/sherlockholmes.jpeg`} alt="test" width={100} height={100} />
+              {/* <Image src={`/sherlockholmes.jpeg`} alt="test" width={100} height={100} /> */}
               <div className="pl-4">
                 <p>Author: <span className="font-semibold">{props.author}</span></p>
                 <p>Published: <span className="font-semibold">{props.publishedYear}</span></p>
