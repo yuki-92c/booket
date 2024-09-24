@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ThemeSwitch from "@/components/ThemeSwitch";
+import SignIn from "./SignIn";
 
 export default function Header() {
   return (
@@ -8,6 +9,7 @@ export default function Header() {
         <Link href={"/dashboard"}>
           <h1 className="text-3xl font-bold mb-4">Booket</h1>
         </Link>
+        <SignIn />
         <ThemeSwitch />
       </div>
 
