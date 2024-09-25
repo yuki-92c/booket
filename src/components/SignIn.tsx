@@ -1,8 +1,9 @@
 import { auth, signIn, signOut } from "@/auth"
 
+
 export default async function SignIn() {
   const session = await auth();
-  console.log(session);
+  // console.log(session);
   const user = session?.user;
 
   return user ? (

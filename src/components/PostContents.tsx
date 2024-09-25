@@ -52,9 +52,6 @@ export function PostForm({
       setErrors(result.error.errors);
       return;
     }
-    console.log("---")
-    console.log(result)
-    console.log("---")
 
     try {
       console.log('111')
