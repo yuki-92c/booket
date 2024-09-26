@@ -22,7 +22,6 @@ export async function POST(
         publisher: data.publisher,
         publishedYear: data.publishedYear,
         author: data.author,
-        likes: 0,
         user: {
           connect: {
             id: userId,

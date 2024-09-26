@@ -1,28 +1,24 @@
-import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import { NextResponse } from 'next/server';
+import { auth } from '@/auth';
+import { getPostDetail } from '@/app/services/postService';
 
-// GET request to retrieve a single post by id
-export async function GET(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
+export async function GET(request: Request, { params }: { params: { id: string } }) {
+  const session = await auth();
+
+  if (!session || !session.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  const postId = params.id;
+  const userId = session.user.id;
 
   try {
-    const post = await prisma.post.findUnique({
-      where: { id },
-      include: {
-        user: {
-          select: {
-            name: true,
-          },
-        },
-      },
-    });
-
-    if (!post) {
-      return NextResponse.json({ message: "Post not found" }, { status: 404 });
+    if (typeof userId !== 'string') {
+      return NextResponse.json({ message: "Invalid user ID" }, { status: 400 });
     }
-
-    return NextResponse.json(post);
+    const postDetail = await getPostDetail(postId, userId);
+    return NextResponse.json(postDetail, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: "Error retrieving post", error }, { status: 500 });
+    return NextResponse.json({ message: "Error getting post detail", error }, { status: 500 });
   }
 }

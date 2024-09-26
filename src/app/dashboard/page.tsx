@@ -9,7 +9,7 @@ interface Post {
     name: string;
   };
   postDate: string;
-  likes: number;
+  likeCount: number;
 }
 
 export default function Home() {

@@ -35,9 +35,10 @@ export default function () {
         author={post.author}
         publishedYear={post.publishedYear}
         publisher={post.publisher}
-        likes={post.likes}
+        likeCount={post.likeCount}
         userName={post.user.name}
         postDate={post.createdAt}
+        liked={post.liked}
       />}
     </div>
     

@@ -22,7 +22,7 @@ export interface IPost {
     name: string;
   };
   postDate: string;
-  likes: number;
+  likeCount: number;
 }
 
 export interface IPostDetail extends IPost {
@@ -32,4 +32,6 @@ export interface IPostDetail extends IPost {
   publishedYear: number;
   publisher: string;
   createdAt: string;
+  liked: boolean;
+  userName: string;
 }
