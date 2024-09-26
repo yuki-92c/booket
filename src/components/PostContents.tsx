@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { z } from "zod"
 import { PostFormProps } from "@/app/types/posts"
-
+import { useRouter } from 'next/navigation'; 
 // Zodスキーマ定義
 const postSchema = z.object({
   bookTitle: z.string().min(1, "Book Title is required").max(100, "Book Title is too long").default(""),
@@ -34,6 +34,8 @@ export function PostForm({
   });
 
   const [errors, setErrors] = useState({});
+  const router = useRouter();
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -64,10 +66,20 @@ export function PostForm({
       });
 
       if (res.ok) {
-        alert("Post created successfully!");
+        setFormData({
+          bookTitle: "",
+          author: "",
+          publisher: "",
+          publishedYear: 0,
+          postTitle: "",
+          postContent: "",
+        });
+        router.push('/dashboard')
+
+
       } else {
         console.log(res);
-        // alert("Failed to create post.");
+        alert("Failed to create post.");
       }
     } catch (error) {
       console.error("Error:", error);
