@@ -28,13 +28,25 @@ export function PostDetail(
         <p className="text-slate-500 dark:text-slate-400 text-sm pr-2">{formattedDate}</p>
         <div className="flex items-center">
           <LikeButton postId={props.id} initialLikeCount={props.likeCount} initialLiked={props.liked} />
-          
-          {/* <IoMdHeartEmpty className="text-slate-500 dark:text-slate-400"/> */}
-          {/* <p className="text-slate-500 dark:text-slate-400 text-sm pr-2">{props.likeCount}</p> */}
+        
         </div>
       </div>
       <div className="flex justify-end gap-2">
-        <button className="bg-slate-800 text-slate-100 dark:bg-slate-900 text-sm rounded-md px-3 py-1">
+        <button className="bg-slate-800 text-slate-100 dark:bg-slate-900 text-sm rounded-md px-3 py-1" onClick={
+          async () => {
+            try {
+              console.log("hererererere")
+              const res = await fetch('/api/posts/' + props.id, {
+                method: 'DELETE',
+              });
+              if (res.ok) {
+                window.location.href = '/dashboard';
+              }
+            } catch (error) {
+              console.error('Error deleting post:', error);
+            }
+          }
+        }>
           Delete
         </button>
         <button className="bg-slate-400 text-slate-100 dark:bg-slate-600 text-sm rounded-md px-3 py-1">
