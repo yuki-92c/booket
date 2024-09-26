@@ -35,7 +35,6 @@ export function PostDetail(
         <button className="bg-slate-800 text-slate-100 dark:bg-slate-900 text-sm rounded-md px-3 py-1" onClick={
           async () => {
             try {
-              console.log("hererererere")
               const res = await fetch('/api/posts/' + props.id, {
                 method: 'DELETE',
               });

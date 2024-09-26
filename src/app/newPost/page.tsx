@@ -1,4 +1,4 @@
-import {PostForm} from '@/components/PostContents';
+import {PostForm} from '@/components/PostForm';
 import { auth } from "@/auth";
 
 export default async function Home() {
