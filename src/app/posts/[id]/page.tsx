@@ -16,6 +16,7 @@ export default function () {
         const response = await fetch(`/api/posts/${id}`);
         const fetchData = await response.json();
         setPost(fetchData);
+        console.log(fetchData);
       } catch (error) {
         console.error(error);
       }
