@@ -25,9 +25,9 @@ export function BookInfo(
         <DrawerContent>
           <DrawerHeader>
           <DrawerTitle className="flex justify-center">{props.bookTitle}</DrawerTitle>
-            <DrawerDescription className="flex justify-center">
+            <DrawerDescription className="flex justify-center" asChild>
               {/* <Image src={`/sherlockholmes.jpeg`} alt="test" width={100} height={100} /> */}
-              <div className="pl-4">
+              <div className="pl-4 flex flex-col">
                 <p>Author: <span className="font-semibold">{props.author}</span></p>
                 <p>Published: <span className="font-semibold">{props.publishedYear}</span></p>
                 <p>Publisher: <span className="font-semibold">{props.publisher}</span></p>
