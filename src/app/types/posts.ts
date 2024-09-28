@@ -36,4 +36,5 @@ export interface IPostDetail extends IPost {
   createdAt: string;
   liked: boolean;
   userName: string;
+  userId: string;
 }

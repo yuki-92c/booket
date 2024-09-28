@@ -15,10 +15,12 @@ export function PostDetail(
     publisher: string;
     publishedYear: number;
     liked: boolean;
+    userId: string;
   }
 ) {
   const day = new Date(props.postDate);
   const formattedDate = day.toLocaleDateString();
+  console.log(props)
 
   return (
     <div>

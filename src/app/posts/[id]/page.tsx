@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { IPostDetail } from "@/app/types/posts";
 
 export default function () {
-  const { id } = useParams(); 
+  const { id } = useParams();
 
   const [post, setPost] = useState<IPostDetail | null>(null);
 
@@ -40,6 +40,7 @@ export default function () {
         userName={post.user.name}
         postDate={post.createdAt}
         liked={post.liked}
+        userId= {post.userId}
       />}
     </div>
     
