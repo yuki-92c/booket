@@ -25,6 +25,7 @@ export default function () {
       fetchPost();
     }
   }, [id]);
+  console.log("post", post);
 
   return (
     <div className="container mx-auto p-4" >
@@ -41,6 +42,7 @@ export default function () {
         postDate={post.createdAt}
         liked={post.liked}
         userId= {post.userId}
+        loginUserId= {post.loginUserId}
       />}
     </div>
     

@@ -4,6 +4,13 @@ import { getPostDetail } from '@/app/services/postService';
 import prisma from '@/lib/prisma';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
+  const session = await auth()
+  const loginUserId = session?.user?.id
+
+  console.log("user", loginUserId)
+  if (!loginUserId) {
+    console.log("Unauthorized")
+  }
   // const session = await auth();
 
   // if (!session || !session.user) {
@@ -32,12 +39,17 @@ export async function GET(request: Request, { params }: { params: { id: string }
         user: true, // include user info
       },
     });
+    
+    const postAndUser = {
+      ...postDetail,
+      loginUserId: loginUserId,
+    };
 
     if (!postDetail) {
       return NextResponse.json({ message: "Post not found" }, { status: 404 });
     }
 
-    return NextResponse.json(postDetail, { status: 200 });
+    return NextResponse.json(postAndUser, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "Error getting post detail", error }, { status: 500 });
   }

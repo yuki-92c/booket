@@ -16,6 +16,7 @@ export function PostDetail(
     publishedYear: number;
     liked: boolean;
     userId: string;
+    loginUserId: string;
   }
 ) {
   const day = new Date(props.postDate);
@@ -32,7 +33,10 @@ export function PostDetail(
         <LikeButton postId={props.id} initialLikeCount={props.likeCount} initialLiked={props.liked} />
       </div>
       {/* <PostDetailLikeButton id={props.id} likeCount={props.likeCount} liked={props.liked} /> */}
-      <PostDetailButton id={props.id} />
+      {props.userId === props.loginUserId && (
+        <PostDetailButton id={props.id} />
+      )}
+      {/* <PostDetailButton id={props.id} /> */}
 
       <p className="font-bold text-xl">
         {props.postTitle}
