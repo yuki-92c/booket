@@ -23,6 +23,8 @@ export function PostForm({
   publishedYear,
   postTitle,
   postContent,
+  editMode = false,
+  postId= ""
 } : PostFormProps) {
   const [formData, setFormData] = useState({
     bookTitle,
@@ -56,14 +58,24 @@ export function PostForm({
     }
 
     try {
-      console.log('111')
-      const res = await fetch("/api/newPost", {
-        method: "POST",
+      const endpoint = editMode ? `/api/posts/${postId}` : "/api/newPost";
+      const method = editMode ? "PUT" : "POST";
+
+      const res = await fetch(endpoint, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
+
+      // const res = await fetch("/api/newPost", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(formData),
+      // });
 
       if (res.ok) {
         setFormData({
@@ -79,11 +91,11 @@ export function PostForm({
 
       } else {
         console.log(res);
-        alert("Failed to create post.");
+        alert(editMode ? "Failed to edit post." : "Failed to create post.");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while creating the post.");
+      alert(editMode ? "An error occurred while editing the post." :"An error occurred while creating the post.");
     }
   };
 
@@ -176,7 +188,7 @@ export function PostForm({
             type="submit"
             className="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded flex-auto"
           >
-            Create Post
+            {editMode ? "Edit Post" : "Create Post"}
           </Button>
         </div>
       </form>

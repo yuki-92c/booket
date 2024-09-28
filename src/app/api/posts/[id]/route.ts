@@ -66,9 +66,6 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     if (post.userId !== userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-    
-    console.log("here")
-    console.log("⭐️postId", postId)
 
     await prisma.post.delete({
       where: { id: postId },
@@ -78,5 +75,52 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
   } catch (error) {
     console.log("error", error);
     return NextResponse.json({ message: "Error deleting post", error }, { status: 500 });
+  }
+}
+
+export async function PUT(request: Request, { params }: { params: { id: string } }) {
+  const session = await auth();
+
+  if (!session || !session.user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  const postId = params.id;
+  const userId = session.user.id;
+
+  try {
+    if (typeof userId !== 'string') {
+      return NextResponse.json({ message: "Invalid user ID" }, { status: 400 });
+    }
+
+    const post = await getPostDetail(postId, userId);
+    console.log("post.userId!!!!!!!!", post.userId);
+    console.log("userId!!!!!!!!", userId);
+    if (post.userId !== userId) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await request.json();
+    const { bookTitle, author, publisher, publishedYear, postTitle, postContent } = body;
+
+    if (!postTitle || !postContent) {
+      return NextResponse.json({ message: "Post title and content are required" }, { status: 400 });
+    }
+
+    const updatedPost = await prisma.post.update({
+      where: { id: postId },
+      data: {
+        bookTitle,
+        author,
+        publisher,
+        publishedYear,
+        postTitle,
+        postContent,
+      },
+    });
+
+    return NextResponse.json(updatedPost, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: "Error updating post", error }, { status: 500 });
   }
 }

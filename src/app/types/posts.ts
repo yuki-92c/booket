@@ -13,6 +13,8 @@ export interface PostFormProps {
   publishedYear: number;
   postTitle: string;
   postContent: string;
+  editMode?: boolean;
+  postId?: string;
 }
 
 export interface IPost {
