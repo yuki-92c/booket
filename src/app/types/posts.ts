@@ -22,6 +22,7 @@ export interface IPost {
   postTitle: string;
   user: {
     name: string;
+    // customName: string;
   };
   postDate: string;
   likeCount: number;
