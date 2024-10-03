@@ -7,7 +7,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [Google],
   callbacks: {
-    async redirect({ url, baseUrl }) {
+    async redirect() {
       // ログイン後に /setUserName にリダイレクト
       return "/setUserName";
     },

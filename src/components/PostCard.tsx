@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardFooter, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { IPost } from "@/app/types/posts";
 

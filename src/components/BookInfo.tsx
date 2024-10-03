@@ -8,7 +8,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import Image from 'next/image'
 import { IBookInfo }  from "@/app/types/posts";
 
 export function BookInfo(

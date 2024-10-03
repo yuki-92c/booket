@@ -2,13 +2,14 @@
 
 import { PostForm } from "@/components/PostForm";
 import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
+// import { useRouter, useParams } from "next/navigation";
 import { IPostDetail } from "@/app/types/posts";
-import { PostFormProps } from "@/app/types/posts";
+// import { PostFormProps } from "@/app/types/posts";
 
-export default function () {
+export default function Home() {
   const { id } = useParams();
-  const router = useRouter();
+  // const router = useRouter();
   const [post, setPost] = useState<IPostDetail | null>(null);
 
 

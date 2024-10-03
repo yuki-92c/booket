@@ -54,6 +54,7 @@ export function PostForm({
     if(result.success === false) {
       console.log(result.error.errors);
       setErrors(result.error.errors);
+      console.log(errors);
       return;
     }
 

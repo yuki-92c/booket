@@ -5,7 +5,7 @@ import { PostDetail } from "@/components/PostDetail";
 import { useEffect, useState } from "react";
 import { IPostDetail } from "@/app/types/posts";
 
-export default function () {
+export default function Home () {
   const { id } = useParams();
 
   const [post, setPost] = useState<IPostDetail | null>(null);
