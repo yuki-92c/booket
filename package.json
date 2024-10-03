@@ -7,7 +7,7 @@
     "build": " next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "dotenv -e .env prisma generate --no-engine"
+    "postinstall": "prisma generate --no-engine"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
