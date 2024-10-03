@@ -9,7 +9,7 @@ export default async function() {
   
   return (
     <div className="container mx-auto p-4">
-      <p>{userId}</p>
+      {/* <p>{userId}</p> */}
       <UserNameForm userId={userId || ""}/>
     </div>
   )

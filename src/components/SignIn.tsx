@@ -9,14 +9,14 @@ export default async function SignIn() {
   return user ? (
     // Signed in
     <>
-      <p className="text-sm">Welcome <span className="font-bold">{user.name}</span> </p>
+      {/* <p className="text-sm">Welcome <span className="font-bold">{user.name}</span> </p> */}
       <form
         action={async () => {
           "use server";
           await signOut();
         }}
       >
-        <button className="border rounded-md px-4 py-2">Sign Out</button>
+        <button className="border rounded-md px-4 py-1 border-slate-200 dark:border-slate-700">Sign Out</button>
       </form>
     </>
   ) : (

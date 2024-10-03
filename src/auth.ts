@@ -6,5 +6,10 @@ import prisma from '@/lib/prisma';
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [Google],
-})
-
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      // ログイン後に /setUserName にリダイレクト
+      return "/setUserName";
+    },
+  },
+});

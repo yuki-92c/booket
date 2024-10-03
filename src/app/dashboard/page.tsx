@@ -1,5 +1,6 @@
 "use client";
 import { PostCard } from "@/components/PostCard";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 interface Post {
@@ -7,6 +8,7 @@ interface Post {
   postTitle: string;
   user: {
     name: string;
+    customName: string;
   };
   postDate: string;
   likeCount: number;
@@ -32,6 +34,12 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-4" >
+      <div className="flex justify-end">
+        <div className="p-2 rounded-md bg-emerald-400 dark:bg-emerald-700 w-36 items-center justify-center flex">
+          <Link href={"/newPost"}>Create a Post</Link>
+        </div>
+      </div>
+      <h1 className="text-2xl font-bold">Posts</h1>
       <div className="flex flex-col gap-4">
         {posts.map((post) => (
           <PostCard key={post.id} {...post} />

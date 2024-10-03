@@ -1,12 +1,14 @@
 "use client";
 import {Input} from "@/components/ui/input";
 import React from "react";
+import { useRouter } from 'next/navigation'; 
 
 interface UserNameFormProps {
   userId: string;
 }
 export function UserNameForm({ userId }: UserNameFormProps) {
   const [customUserName, setCustomUserName] = React.useState('');
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +26,11 @@ export function UserNameForm({ userId }: UserNameFormProps) {
   
       const result = await updateUser.json();
       console.log("Result from API", result); // APIの結果を確認
+      if (result.customName) {
+        router.push("/dashboard");
+      } else {
+        console.error("Error saving custom username", result);
+      }
     } catch (error) {
       console.error("Error saving custom username", error);
     }
@@ -36,7 +43,6 @@ export function UserNameForm({ userId }: UserNameFormProps) {
   return (
     <div>
       <h1>Set User Name</h1>
-      <p>{userId}</p>
       <form onSubmit={handleSubmit}>
         <Input
           type="text"
@@ -45,9 +51,11 @@ export function UserNameForm({ userId }: UserNameFormProps) {
           value={customUserName}
           onChange={(e) => setCustomUserName(e.target.value)}
         />
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Save
-        </button>
+        <div className="mt-4">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Save
+          </button>
+        </div>
       </form>
     </div>
   );

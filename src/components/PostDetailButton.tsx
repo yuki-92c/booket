@@ -22,7 +22,7 @@ export function PostDetailButton(props: {id: string}) {
     <button className="bg-slate-800 text-slate-100 dark:bg-slate-900 text-sm rounded-md px-3 py-1" onClick={handleDelete}>
       Delete
     </button>
-    <button className="bg-slate-400 text-slate-100 dark:bg-slate-600 text-sm rounded-md px-3 py-1" onClick={handleEdit}>
+    <button className="border-2 border-slate-800 bg-slate-100 text-slate-800 text-sm rounded-md px-3 py-1" onClick={handleEdit}>
       Edit
     </button>
   </div>

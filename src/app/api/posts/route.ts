@@ -8,6 +8,7 @@ export const GET = async (req: Request, res: NextResponse) => {
         user: {
           select: {
             name: true,
+            customName: true,
           },
         },
       },

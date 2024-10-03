@@ -25,7 +25,16 @@ export default function () {
       fetchPost();
     }
   }, [id]);
-  console.log("post", post);
+  console.log("postdayo", post);
+  // setPostが実行されるまでの間、postはnullなので、ローディング中の表示を追加
+  if (!post) {
+    return (
+      <div className="container mx-auto p-8" >
+        <p className="font-bold">Loading...</p>
+      </div>
+    );
+  }
+  
 
   return (
     <div className="container mx-auto p-4" >
@@ -38,7 +47,8 @@ export default function () {
         publishedYear={post.publishedYear}
         publisher={post.publisher}
         likeCount={post.likeCount}
-        userName={post.user.name}
+        // userName={post.user.name}
+        customName={post.user.customName}
         postDate={post.createdAt}
         liked={post.liked}
         userId= {post.userId}

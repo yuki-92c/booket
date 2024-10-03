@@ -19,7 +19,7 @@ export function BookInfo(
       <Drawer>
         <div className="flex justify-center items-center mt-8">
           <DrawerTrigger>
-          <div className="border rounded-md w-48 p-2">View book info</div>
+          <div className="border rounded-md w-48 p-2 border-slate-200 dark:border-slate-700">View book info</div>
           </DrawerTrigger>
         </div>
         <DrawerContent>

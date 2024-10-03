@@ -22,7 +22,7 @@ export interface IPost {
   postTitle: string;
   user: {
     name: string;
-    // customName: string;
+    customName: string;
   };
   postDate: string;
   likeCount: number;
@@ -39,4 +39,5 @@ export interface IPostDetail extends IPost {
   userName: string;
   userId: string;
   loginUserId: string;
+  customName: string;
 }
