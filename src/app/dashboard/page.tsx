@@ -2,19 +2,25 @@
 import { PostCard } from "@/components/PostCard";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 interface Post {
   id: string;
   postTitle: string;
-  user: {
-    name: string;
-    customName: string;
-  };
+  userId: string;
   postDate: string;
   likeCount: number;
+  // userName: string;
+  user: {
+    name: string;
+  };
 }
 
 export default function Home() {
+
+  const { data: session } = useSession();
+  // const { data: session, status } = useSession();
+  
 
   const [posts, setPosts] = useState<Post[]>([]);
   useEffect(() => {

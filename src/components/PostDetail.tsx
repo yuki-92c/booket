@@ -7,8 +7,8 @@ export function PostDetail(
     id: string;
     postTitle: string;
     postContent: string;
-    customName: string;
-    // userName: string;
+    // customName: string;
+    userName: string;
     postDate: string;
     likeCount: number;
     bookTitle: string;
@@ -22,12 +22,11 @@ export function PostDetail(
 ) {
   const day = new Date(props.postDate);
   const formattedDate = day.toLocaleDateString();
-  console.log(props)
 
   return (
     <div>
       <div className="flex justify-end">
-        <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold pr-2">{props.customName}</p>
+        <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold pr-2">{props.userName}</p>
         <p className="text-slate-500 dark:text-slate-400 text-sm pr-2">{formattedDate}</p>
       </div>
       <div className="flex items-center">

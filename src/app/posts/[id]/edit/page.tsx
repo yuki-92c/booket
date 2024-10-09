@@ -3,9 +3,7 @@
 import { PostForm } from "@/components/PostForm";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-// import { useRouter, useParams } from "next/navigation";
 import { IPostDetail } from "@/app/types/posts";
-// import { PostFormProps } from "@/app/types/posts";
 
 export default function Home() {
   const { id } = useParams();
@@ -17,9 +15,9 @@ export default function Home() {
     const fetchPost = async () => {
       try {
         const res = await fetch(`/api/posts/${id}`);
-        console.log(res);
+        // console.log(res);
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         setPost(data);
       } catch (error) {
         console.error("Error loading post:", error);

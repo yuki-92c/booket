@@ -13,7 +13,7 @@ export async function POST(
   try{
     
     const data = await request.json();
-    const userId = session.user.id;
+    const userId = session.user.id as string;
     const post = await prisma.post.create({
       data: {
         postTitle: data.postTitle,
@@ -22,11 +22,7 @@ export async function POST(
         publisher: data.publisher,
         publishedYear: data.publishedYear,
         author: data.author,
-        user: {
-          connect: {
-            id: userId,
-          },
-        },
+        userId: userId as string,
       },
     });
 

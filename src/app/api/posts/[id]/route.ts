@@ -3,32 +3,9 @@ import { auth } from '@/auth';
 import { getPostDetail } from '@/app/services/postService';
 import prisma from '@/lib/prisma';
 
+
 export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const session = await auth()
-  const loginUserId = session?.user?.id
 
-  console.log("user", loginUserId)
-  if (!loginUserId) {
-    console.log("Unauthorized")
-  }
-  // const session = await auth();
-
-  // if (!session || !session.user) {
-  //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  // }
-
-  // const postId = params.id;
-  // const userId = session.user.id;
-
-  // try {
-  //   if (typeof userId !== 'string') {
-  //     return NextResponse.json({ message: "Invalid user ID" }, { status: 400 });
-  //   }
-  //   const postDetail = await getPostDetail(postId, userId);
-  //   return NextResponse.json(postDetail, { status: 200 });
-  // } catch (error) {
-  //   return NextResponse.json({ message: "Error getting post detail", error }, { status: 500 });
-  // }
   const postId = params.id;
 
   try {
@@ -36,13 +13,16 @@ export async function GET(request: Request, { params }: { params: { id: string }
     const postDetail = await prisma.post.findUnique({
       where: { id: postId },
       include: {
-        user: true, // include user info
+        user: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
     
     const postAndUser = {
       ...postDetail,
-      loginUserId: loginUserId,
     };
 
     if (!postDetail) {
@@ -64,7 +44,6 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 
   const postId = params.id;
   const userId = session.user.id;
-  console.log('userId!!!!!', userId);
 
   try {
     if (typeof userId !== 'string') {
@@ -72,8 +51,6 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     }
 
     const post = await getPostDetail(postId, userId);
-    console.log("post.userId!!!!!!!!", post.userId);
-
 
     if (post.userId !== userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -106,8 +83,6 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     }
 
     const post = await getPostDetail(postId, userId);
-    console.log("post.userId!!!!!!!!", post.userId);
-    console.log("userId!!!!!!!!", userId);
     if (post.userId !== userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
