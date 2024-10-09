@@ -3,6 +3,10 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import { Providers } from "@/app/providers";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
+
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -19,13 +23,16 @@ export const metadata: Metadata = {
   description: "A book review site",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html lang="en" suppressHydrationWarning>
+      <SessionProvider session={session}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 dark:bg-slate-800 text-zinc-700 dark:text-zinc-100`}
       >
@@ -35,6 +42,7 @@ export default function RootLayout({
         </Providers>
 
       </body>
+      </SessionProvider>
     </html>
   );
 }

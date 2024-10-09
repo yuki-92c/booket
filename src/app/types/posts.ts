@@ -20,13 +20,14 @@ export interface PostFormProps {
 export interface IPost {
   id: string;
   postTitle: string;
-  user: {
-    name: string;
-    customName: string;
-  };
+  userId: string;
   postDate: string;
   likeCount: number;
-}
+  // userName: string;
+  user : {
+    name: string;
+  }
+} 
 
 export interface IPostDetail extends IPost {
   postContent: string;
@@ -36,8 +37,7 @@ export interface IPostDetail extends IPost {
   publisher: string;
   createdAt: string;
   liked: boolean;
-  userName: string;
+  // userName: string;
   userId: string;
   loginUserId: string;
-  customName: string;
 }

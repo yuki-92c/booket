@@ -1,5 +1,4 @@
 "use client"
-
 import { useParams } from "next/navigation";
 import { PostDetail } from "@/components/PostDetail";
 import { useEffect, useState } from "react";
@@ -16,7 +15,7 @@ export default function Home () {
         const response = await fetch(`/api/posts/${id}`);
         const fetchData = await response.json();
         setPost(fetchData);
-        console.log(fetchData);
+        // console.log(fetchData);
       } catch (error) {
         console.error(error);
       }
@@ -25,7 +24,7 @@ export default function Home () {
       fetchPost();
     }
   }, [id]);
-  console.log("postdayo", post);
+  // console.log("postdayo", post);
   // setPostが実行されるまでの間、postはnullなので、ローディング中の表示を追加
   if (!post) {
     return (
@@ -47,8 +46,8 @@ export default function Home () {
         publishedYear={post.publishedYear}
         publisher={post.publisher}
         likeCount={post.likeCount}
-        // userName={post.user.name}
-        customName={post.user.customName}
+        userName={post.user.name}
+        // customName={post.user.customName}
         postDate={post.createdAt}
         liked={post.liked}
         userId= {post.userId}

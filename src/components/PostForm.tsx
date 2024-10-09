@@ -6,6 +6,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { z } from "zod"
 import { PostFormProps } from "@/app/types/posts"
 import { useRouter } from 'next/navigation'; 
+import { useSession } from "next-auth/react";
+
 // Zodスキーマ定義
 const postSchema = z.object({
   bookTitle: z.string().min(1, "Book Title is required").max(100, "Book Title is too long").default(""),
@@ -38,7 +40,12 @@ export function PostForm({
   const [errors, setErrors] = useState({});
   const router = useRouter();
 
+  const { data: session } = useSession()
+  // console.log('session', session)
+  // console.log('status', status)
 
+
+  console.log(session);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -70,13 +77,6 @@ export function PostForm({
         body: JSON.stringify(formData),
       });
 
-      // const res = await fetch("/api/newPost", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(formData),
-      // });
 
       if (res.ok) {
         setFormData({
@@ -104,6 +104,10 @@ export function PostForm({
     <div>
       <form onSubmit={handleSubmit} className="mb-8">
         <div>
+          <p>{session?.user?.name}</p>
+          <p>{session?.user?.email}</p>
+          <p>{session?.user?.id}</p>
+          
           <label htmlFor="bookTitle" className="block text-sm font-bold text-slate-500 dark:text-slate-400">
             Book Title
           </label>
