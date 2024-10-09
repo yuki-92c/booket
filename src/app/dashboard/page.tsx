@@ -2,7 +2,7 @@
 import { PostCard } from "@/components/PostCard";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
 interface Post {
   id: string;
@@ -18,7 +18,7 @@ interface Post {
 
 export default function Home() {
 
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   // const { data: session, status } = useSession();
   
 

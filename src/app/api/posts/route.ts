@@ -1,10 +1,10 @@
 import prisma from '@/lib/prisma'
 import { NextResponse } from 'next/server'
-import { auth } from '@/auth'
+// import { auth } from '@/auth'
 
 
 export const GET = async () => {
-  const session = await auth()
+  // const session = await auth()
 
   // console.log('session!!!!!', session)
   try {

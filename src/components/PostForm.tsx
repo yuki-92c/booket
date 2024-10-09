@@ -40,7 +40,7 @@ export function PostForm({
   const [errors, setErrors] = useState({});
   const router = useRouter();
 
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   // console.log('session', session)
   // console.log('status', status)
 
